@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="layout.xhtml">
+	<ui:define name="source">
+		<h:form id="departmentForm">
+
+			<h3 class="title ui-widget-header ui-corner-all"
+				style="font-family: Arial, sans-serif; padding: 5px">List of
+				departments</h3>
+			<p:dataTable id="departmentlist"
+				value="#{departmentModel.findAllDepartments()}" var="de" border="1">
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Id" />
+					</f:facet>
+					<h:outputText value="#{de.id}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Name" />
+					</f:facet>
+					<h:outputText value="#{de.name}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Description" />
+					</f:facet>
+					<h:outputText value="#{de.description}" />
+				</p:column>
+				<p:column headerText="Actions" style="width:20%">
+					<p:commandButton value="Edit" id="buttonEdit"
+						update=":formDialogNewDepartment, :formDialogEditDepartment"
+						actionListener="#{departmentModel.openEditModal(de)}"
+						icon="ui-icon-disk" />
+					<p:commandButton value="Delete" id="buttonDelete" update="@form"
+						actionListener="#{departmentModel.deleteDepartment(de.id)}"
+						icon="ui-icon-trash" />
+				</p:column>
+			</p:dataTable>
+			<div>
+				<p:commandButton value="New Department" id="buttonNewDepartment"
+					actionListener="#{departmentModel.openCreateModal}"
+					icon="ui-icon-disk"
+					update=":formDialogNewDepartment, :formDialogEditDepartment" />
+			</div>
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

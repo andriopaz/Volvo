@@ -1,0 +1,1 @@
+[{"_class":"com.volvo.test.domain.Department","id":0,"name":"Department 1", "description":"IT Department"},{"_class":"com.volvo.test.domain.Department","id":1,"name":"Department 2", "description":"HR Department"}]
