@@ -6,7 +6,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
@@ -19,7 +19,7 @@ import com.volvo.test.service.UserService;
 
 @Component
 @ManagedBean(name = "userModel", eager = true)
-@RequestScoped
+@ViewScoped
 public class UserModel {
 
     @ManagedProperty(value = "#{user}")
@@ -59,7 +59,6 @@ public class UserModel {
     
 	public void openEditModal(UserView user) {
 		setUser(user);
-		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("editUserId", user.getId());
 		
 		RequestContext context = RequestContext.getCurrentInstance();	
 		context.execute("PF('dlgEditUser').show()");
@@ -78,23 +77,19 @@ public class UserModel {
     	permissionService.save(user.getPermissions());    	
     	userService.save(u);
     	
-    	RequestContext.getCurrentInstance().update("userForm");
-    	
+    	RequestContext.getCurrentInstance().update("userForm");   	
     	FacesContext.getCurrentInstance().addMessage("errors",
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "user created",
                     "The user " + u.getName() + " has been created with id=" + u.getId()));
     }
     
     public void edit() {
-    	Long editId = (Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("editUserId");
-    	FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("editUserId");
-    	User u = new User(editId, user.getName(), user.getDescription(), user.getDepartment(), user.getPermissions());
+    	User u = new User(user.getId(), user.getName(), user.getDescription(), user.getDepartment(), user.getPermissions());
     	
     	permissionService.save(user.getPermissions());
     	userService.save(u);
     	
     	RequestContext.getCurrentInstance().update("userForm");
-    	
     	FacesContext.getCurrentInstance().addMessage("errors",
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "user updated",
                     "The user " + u.getName() + " has been updated with id=" + u.getId()));

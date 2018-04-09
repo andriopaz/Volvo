@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.volvo.test.view.DepartmentView;
+
 @Entity
 @Table(name = "department")
 public class Department implements Serializable {
@@ -97,7 +99,7 @@ public class Department implements Serializable {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if ((getClass() != obj.getClass()) && obj.getClass() != DepartmentView.class)
 			return false;
 		Department other = (Department) obj;
 		if (description == null) {
@@ -114,11 +116,6 @@ public class Department implements Serializable {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
-			return false;
-		if (users == null) {
-			if (other.users != null)
-				return false;
-		} else if (!users.equals(other.users))
 			return false;
 		return true;
 	}

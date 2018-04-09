@@ -17,7 +17,8 @@
 				<p:outputLabel value="Description*: " />
 				<p:inputText id="createInputDesc" value="#{userModel.user.description}" required="true" requiredMessage="Invalid description." />
 				<p:outputLabel value="Department*: " />
-				<p:selectOneMenu id="editInputDepartment" converter="departamentConverter" value="#{userModel.user.department}">
+				<p:selectOneMenu id="editInputDepartment" converter="departamentConverter" value="#{userModel.user.department}" required="true" requiredMessage="Invalid Department">
+					<f:selectItem itemLabel="Select.." itemValue=""/>
 					<f:selectItems value="#{departmentModel.findAllDepartments()}" var="dep" itemValue="#{dep}" itemLabel="#{dep.name}" />
 				</p:selectOneMenu>
 				
@@ -46,15 +47,16 @@
 				<p:outputLabel value="Description*: " />
 				<p:inputText id="editInputDesc"	value="#{userModel.user.description}" required="true" />
 				<p:outputLabel value="Department*: " />
-				<p:selectOneMenu id="editInputDepartment" converter="departamentConverter" value="#{userModel.user.department}">
+				<p:selectOneMenu id="editInputDepartment" converter="departamentConverter" value="#{userModel.user.department}" required="true" requiredMessage="Invalid Department">
+					<f:selectItem itemLabel="Select.." itemValue=""/>
 					<f:selectItems value="#{departmentModel.findAllDepartments()}" var="dep" itemValue="#{dep}" itemLabel="#{dep.name}" />
 				</p:selectOneMenu>
 				
 				<p:outputLabel value="Permissions: " />
-				<p:selectCheckboxMenu id="multiple" value="#{userModel.user.permissions}" converter="permissionConverter" label="Permissions" multiple="true"
-                              filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+				<p:selectManyCheckbox id="multiple" value="#{userModel.user.permissions}" converter="permissionConverter" label="Permissions" multiple="true"
+                              filter="true" filterMatchMode="startsWith" panelStyle="width:250px" columns="2">
             		<f:selectItems value="#{permissionModel.findAllPermissions()}" var="pe" itemValue="#{pe}" itemLabel="#{pe.name}" />
-        		</p:selectCheckboxMenu>
+        		</p:selectManyCheckbox>
 				
 				<p:commandButton value="Save" id="buttonEditUser"
 					actionListener="#{userModel.edit}" icon="ui-icon-disk"

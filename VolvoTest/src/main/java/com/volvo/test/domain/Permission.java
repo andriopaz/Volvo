@@ -1,17 +1,16 @@
 package com.volvo.test.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.volvo.test.view.PermissionView;
 
 @Entity
 @Table(name = "permission")
@@ -30,21 +29,21 @@ public class Permission implements Serializable {
 	@Column(name = "description", nullable = false)
 	private String description;
 	
-	@ManyToMany(mappedBy = "permissions", fetch = FetchType.EAGER)
-    private Set<User> users = new HashSet<User>();
+//	@ManyToMany(mappedBy = "permissions", fetch = FetchType.EAGER)
+//    private Set<User> users = new HashSet<User>();
 	
 	public Permission() {
 		this.id = null;
 		this.name = null;
 		this.description = null;
-		this.users = new HashSet<User>();
+//		this.users = new HashSet<User>();
 	}
 	
 	public Permission(Long id, String name, String description, Set<User> users) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.users = users;
+//		this.users = users;
 	}
 
 	public Long getId() {
@@ -71,14 +70,6 @@ public class Permission implements Serializable {
 		this.description = description;
 	}
 	
-	public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
-	
 	// ======= Implements =======
 
 	@Override
@@ -97,7 +88,7 @@ public class Permission implements Serializable {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (getClass() != obj.getClass() && obj.getClass() != PermissionView.class)
 			return false;
 		Permission other = (Permission) obj;
 		if (id == null) {

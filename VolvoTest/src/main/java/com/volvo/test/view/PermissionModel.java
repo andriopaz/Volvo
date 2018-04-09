@@ -32,7 +32,6 @@ public class PermissionModel {
         this.permission.setId(found.getId());
         this.permission.setName(found.getName());
         this.permission.setDescription(found.getDescription());
-        this.permission.setUsers(found.getUsers());
     }
 
     public List<Permission> findAllPermissions() {
@@ -42,7 +41,7 @@ public class PermissionModel {
             view.setId(entity.getId());
             view.setName(entity.getName());
             view.setDescription(entity.getDescription());
-            view.setUsers(entity.getUsers());
+//            view.setUsers(entity.getUsers());
             permissions.add(view);
         }
         return permissions;
@@ -53,7 +52,7 @@ public class PermissionModel {
     }
     
     public void save() {
-    	Permission p = new Permission(permission.getId(), permission.getName(), permission.getDescription(), permission.getUsers());
+    	Permission p = new Permission(permission.getId(), permission.getName(), permission.getDescription(), null);
     	permissionService.save(p);
     	
     	RequestContext.getCurrentInstance().update("permissionForm");
@@ -66,7 +65,7 @@ public class PermissionModel {
     public void edit() {
     	Long editId = (Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("editPermissionId");
     	FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("editPermissionId");
-    	Permission p = new Permission(editId, permission.getName(), permission.getDescription(), permission.getUsers());
+    	Permission p = new Permission(editId, permission.getName(), permission.getDescription(), null);
     	permissionService.save(p);
     	
     	RequestContext.getCurrentInstance().update("permissionForm");	

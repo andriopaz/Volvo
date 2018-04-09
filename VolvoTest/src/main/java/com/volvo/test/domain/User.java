@@ -41,7 +41,7 @@ public class User implements Serializable {
 	@JsonBackReference
 	private Department department;
 	
-    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.REFRESH })
     @JoinTable(name = "user_permission", 
         joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") }, 
         inverseJoinColumns = { @JoinColumn(name = "permission_id", referencedColumnName = "id") })
